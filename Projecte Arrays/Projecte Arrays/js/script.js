@@ -117,3 +117,18 @@ fetch("js/data/earthMeteorites.json")
 });
 
 */
+
+// ////////////////////////////
+// //      Exercici 1        //
+// ////////////////////////////
+
+//funció de proba per l'opció reload
+function MostraText(){
+	let text7 = document.getElementById("agafa_text").value;
+	document.getElementById("text_aqui").innerHTML = text7;
+}
+
+//botó per reiniciar la pàgina amb la funcionalitat location.reload()
+function ReloadWindow(){
+	location.reload();
+}
