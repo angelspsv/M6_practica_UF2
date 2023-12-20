@@ -132,3 +132,33 @@ function MostraText(){
 function ReloadWindow(){
 	location.reload();
 }
+
+//funció que ordena mots de forma ascendent
+function OrdenaASC(){
+	let entrada = document.getElementById("espai_per_text").value;
+	document.getElementById("mostra_colors_asc").innerHTML = TextToArray(entrada);
+}
+
+//funció que rep un text i retorna un array de mots
+//la funció comprova quin és el separador dins del text, espai en blanc o la coma
+function TextToArray(text){
+	let myArr = [];
+	let coma = CheckComa(text);
+	if(coma){
+		//si el separador és una coma
+		myArr = text.split(",");
+	} else {
+		//si el separador és un espai
+		myArr = text.split(" ");
+	}
+	return myArr.sort();
+}
+
+function CheckComa(text){
+	for(let i=0; i<text.length; i++){
+		if(text.charAt(i) == ","){
+			return true;
+		}
+	}
+	return false;
+}

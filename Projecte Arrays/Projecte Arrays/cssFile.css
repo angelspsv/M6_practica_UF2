@@ -1,0 +1,10 @@
+#reiniciar button {
+    background-color: #07cb8a; 
+    color: #040000; 
+    font-size: medium;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+  
