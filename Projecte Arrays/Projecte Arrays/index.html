@@ -17,7 +17,24 @@
 	<br>
 	<div><p>Escriu alguns colors i premi el botó perquè els ordeni alfabèticament</p></div>
 	<input type="text" id="espai_per_text">
-	<button onclick="OrdenaASC()">Ordena els colors</button>
-	<div id="mostra_colors_asc"></div>	
+	<button onclick="OrdenaASC()">Ordena ascendentment</button>
+	<button onclick="OrdenaDSC()">Ordena descendentment</button>
+	<div id="mostra_mots_ordenats"></div>	
+
+	<br><p><b>Coneixes el nom d'algun Pokemon? Comprovar-ho!</b></p>
+	<span>Entra el nom del Pokemon:</span>
+	<input type="text" id="espai_per_nom_pokemon"><button onclick="CercaPokemon()">Cercar</button><br>
+	<div id="resposta_poke"></div>
+
+	<br><p>Entra un número que jo desaré dins d'un array i també et diré quina és la mitjana de tots els números que hi ha a l'array</p>
+	<input type="text" id="num_entrat">
+	<button onclick="MitjanaDelArray()">Enter</button>
+	<div id="la_mitja"></div><br>
+
+	<br><p>Entra un String:</p>
+	<input type="text" id="cadena">
+	<button onclick="OrderASC">Ordena ascendentment</button>
+	<button onclick="OrderDSC">Ordena descendentment</button>
+	<div id="texto_ordenado"></div>
 </body>
 </html>
