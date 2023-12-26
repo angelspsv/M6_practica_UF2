@@ -147,7 +147,7 @@ function TextToArray(text){
 	let coma = CheckComa(text);
 	if(coma){
 		//si el separador és una coma
-		myArr = text.split(",");
+		myArr = text.split(", ");
 	} else {
 		//si el separador és un espai
 		myArr = text.split(" ");
@@ -215,7 +215,63 @@ function Suma(arr){
 	return suma;
 }
 
+//funció que recorre un String cencant un espai en blanc
+function CheckSpace(text){
+	for(let i=0; i<text.length; i++){
+		if(text.charAt(i) == " "){
+			return true;
+		}
+	}
+	return false;
+}
 
 //Programa que rep un String i el retorna ordenat ascendentment o descendentment depenent si l'usuari
 //prem el botó ASC o el botó DSC
-let entrada3 = document.getElementById("cadena").value;
+function orderList(nu){
+	let arr_str = [];
+	let entrada3 = document.getElementById("cadena").value;
+	if (CheckComa(entrada3)){
+		arr_str = entrada3.split(", ");
+	} else {
+		if (CheckSpace(entrada3)){
+			arr_str = entrada3.split(" ");
+		} else {
+			arr_str = entrada3.split('');
+		}
+	}
+	if (nu == 1){
+		arr_str.sort();
+	} else if (nu == 2) {
+		arr_str.sort();
+		arr_str.reverse();
+	}
+	document.getElementById("texto_ordenado").innerHTML = arr_str;
+}
+
+
+//Fer una funció anomenada searchList() i que retorni la posició d'un element buscat pel prompt, 
+//entenc que s'ha de cercar l'element dins d'un array
+//En aquest cas i per aquest exercici faré servir l'array de pokemons
+let mi_arr_prueba = ["angel", "marta", "laura", "miriam", "daniel"];
+let elem = document.getElementById("cerca_element").value;
+document.getElementById("posicio_element").innerHTML = searchList(mi_arr_prueba, elem);
+
+function searchList(array, elemento){
+	let position_element = array.indexOf(elemento);
+	if (position_element == -1){
+		return "cap element trobat";
+	} else {
+		return `l'element cercat s'ha trobat a la posició ${position_element}. Hi pot haver més elemets amb aquest nom`;
+	}
+	//NO LLEGA A FUNCIONAR. DEBE DEVOLVER RESPUESTA POR PROMPT
+}
+//array.indexOf() retorna la 1a posició de la 1a referència trobada i si no, -1
+//array.findIndex() lo mateix que indexOf()
+/*
+
+	<br><span>Entra l'element que vols cercar:</span>
+	<input type="text" id="cerca_element">
+	<button onclick="searchList(my_array, element)">Cerca'l</button>
+	<div id="posicio_element"></div>
+
+*/

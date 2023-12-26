@@ -31,10 +31,15 @@
 	<button onclick="MitjanaDelArray()">Enter</button>
 	<div id="la_mitja"></div><br>
 
-	<br><p>Entra un String:</p>
+	<br><span>Entra un String:</span>
 	<input type="text" id="cadena">
-	<button onclick="OrderASC">Ordena ascendentment</button>
-	<button onclick="OrderDSC">Ordena descendentment</button>
+	<button onclick="orderList(1)">Ordena ascendentment</button>
+	<button onclick="orderList(2)">Ordena descendentment</button>
 	<div id="texto_ordenado"></div>
+
+	<br><span>Entra l'element que vols cercar:</span>
+	<input type="text" id="cerca_element">
+	<button onclick="searchList(mi_arr_prueba, elem)">Cerca'l</button>
+	<div id="posicio_element"></div>
 </body>
 </html>
