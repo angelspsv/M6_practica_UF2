@@ -249,29 +249,31 @@ function orderList(nu){
 }
 
 
-//Fer una funció anomenada searchList() i que retorni la posició d'un element buscat pel prompt, 
+//Fer una funció anomenada searchList() i que retorni la posició d'un element buscat pel prompt; no queda molt clar, perquè el prompt() és fa servir per agafar dades i si volem mostrar el resultat es millor un alert()
 //entenc que s'ha de cercar l'element dins d'un array
 //En aquest cas i per aquest exercici faré servir l'array de pokemons
-let mi_arr_prueba = ["angel", "marta", "laura", "miriam", "daniel"];
-let elem = document.getElementById("cerca_element").value;
-document.getElementById("posicio_element").innerHTML = searchList(mi_arr_prueba, elem);
-
-function searchList(array, elemento){
+function searchList(array_entrada, elemento_entrada){
+	//toLowerCase() totes les lletres de l'array i de l'element cercat
+	let array = array_entrada.map((poke) => poke.toLowerCase());
+	let elemento = elemento_entrada.toLowerCase(); 
+	
+	//faig servir el mètode indexOf() per cercar i retornar l'index d'un element dins de l'array
 	let position_element = array.indexOf(elemento);
 	if (position_element == -1){
 		return "cap element trobat";
 	} else {
 		return `l'element cercat s'ha trobat a la posició ${position_element}. Hi pot haver més elemets amb aquest nom`;
 	}
-	//NO LLEGA A FUNCIONAR. DEBE DEVOLVER RESPUESTA POR PROMPT
 }
-//array.indexOf() retorna la 1a posició de la 1a referència trobada i si no, -1
-//array.findIndex() lo mateix que indexOf()
-/*
 
-	<br><span>Entra l'element que vols cercar:</span>
-	<input type="text" id="cerca_element">
-	<button onclick="searchList(my_array, element)">Cerca'l</button>
-	<div id="posicio_element"></div>
+//array de prova
+let mi_arr_prueba = ["angel", "marta", "laura", "miriam", "daniel"];
 
-*/
+//funció que rep el valor des del navegador, crea l'array de pokemons, crida la funció searchList() i finalment mostra el resultat amb un alert
+function SearchFunction(){
+	let elem = document.getElementById("cerca_element").value;
+	let poke_names = [];
+	poke_names = dadesPokemon.map((pokemon) => pokemon.name);
+	let temp = searchList(poke_names, elem);
+	alert(temp);
+}
