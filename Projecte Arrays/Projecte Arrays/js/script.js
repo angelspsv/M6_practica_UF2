@@ -277,3 +277,114 @@ function SearchFunction(){
 	let temp = searchList(poke_names, elem);
 	alert(temp);
 }
+
+//En l'exercici 4 de la 1a part es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
+//el seu nom, la imatge i el pes (kg), però sense les lletres 'kg'.
+//faré els tres arrays per separat perquè he de modificar el valor de weight
+function ArrayMultidimensional(){
+	let myArrMultidimensional = ArrayMultidimensionalPokemons();
+	MuestraObjetoPokemon(myArrMultidimensional);
+}
+
+
+//Creació d'un array multidimensional de pokemons amb retorn
+function ArrayMultidimensionalPokemons(){
+	let poke_names = dadesPokemon.map((pokemon) => pokemon.name);
+	let poke_fotos = dadesPokemon.map((pokemon) => pokemon.img);
+	let poke_peso = dadesPokemon.map((pokemon) => pokemon.weight);
+
+	let poke_peso_filtrat = FiltraPeso(poke_peso);
+	//línia per provar la correcta execució de la funció FiltraPeso()
+	/*
+	document.getElementById("mostra_arr_multi").innerHTML = poke_peso_filtrat;
+	*/
+
+	let arr_poke_multidimensional = [];
+	for(let i=0; i<dadesPokemon.length; i++){
+		let poke_data_temp = {
+			name: poke_names[i],
+			img: poke_fotos[i],
+			weight: poke_peso_filtrat[i]
+		}
+		arr_poke_multidimensional.push(poke_data_temp);
+	}
+	return arr_poke_multidimensional;
+}
+
+
+//funció que filtra el pes de cada pokemon i retorna un array amb el pes i sense l'afegit de "kg"
+function FiltraPeso(arr){
+    let str = "";
+	for(let i=0; i<arr.length; i++){
+    	let temp = "";
+    	str = arr[i];
+        for(let j=0; j<str.length; j++){
+    		if(str.charAt(j) == " "){
+            	break;
+            } else {
+            	temp += str.charAt(j);
+            }
+        }
+        arr[i] = temp;
+	}
+    return arr;
+}
+
+		/*
+
+		//Després vaig pensar en una altra manera per filtrar l'array de pes dels pokemons per treure el 'kg' de tots els valors
+		
+		//funció que rep un array i procesa tot els seus valors suprimint el contingut trobat després de l'espai en blanc
+		function filtraPes(arr_text){
+			for(let i=0; i<arr_text.length; i++){
+				let temp = arr_text[i];
+				let espai = FindSpace(temp);
+    			let result = temp.slice(0, espai);
+				arr_text[i] = result;
+			}
+    		return arr_text;
+		}
+
+		//funció que recorre un text en la cerca d'un espai en blanc i retorna la seva posició
+		function FindSpace(text){
+			let num = text.length;
+    		for(let i=0; i<text.length; i++){
+				if(text.charAt(i) == " "){
+    				return num = i;
+    			}
+			}
+    		return num;
+		}
+
+		*/
+
+//funció específica que mostra en el DOM el contingut de l'array multidimensional creat pels Pokemons
+function MuestraObjetoPokemon(arr){
+	let container = document.getElementById("mostra_arr_multi");
+	for(let i=0; i<arr.length; i++){
+		let pokemon = arr[i];
+
+		let pokemonDiv = document.createElement('div');
+		pokemonDiv.innerHTML = `
+			<h3>${pokemon.name}</h3>
+			<img src="${pokemon.img}" alt="${pokemon.name}">
+			<p>Peso: ${pokemon.weight}</p>
+		`;
+		container.appendChild(pokemonDiv);
+	}
+}
+
+
+
+//fer una funció anomenada calcMitjana() que calculi la mitjana d'un valor numèric fins dos decimals i mostri el resultat per alert()
+function CalculaMitjana(){
+	let numero_entrat = document.getElementById("numero_entrat").value;
+	let temp2 = calcMitjana(numero_entrat);
+	alert(temp2);
+}
+
+function calcMitjana(num){
+	let temp1 = parseInt(num);
+	let num_mitjana = (temp1/2).toFixed(2);
+	return num_mitjana;
+}

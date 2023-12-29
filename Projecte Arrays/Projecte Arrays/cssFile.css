@@ -7,4 +7,13 @@
     border-radius: 5px; 
     cursor: pointer; 
 }
-  
+
+#arr {
+    background-color: #ca4987; 
+    color: #040000; 
+    font-size: medium;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+}
