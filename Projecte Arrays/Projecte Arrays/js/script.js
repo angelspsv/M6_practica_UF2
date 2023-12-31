@@ -388,3 +388,87 @@ function calcMitjana(num){
 	let num_mitjana = (temp1/2).toFixed(2);
 	return num_mitjana;
 }
+
+
+//Exercici 6 de la Part.1
+//fer una funció que mostri en el DOM una llista dels pokemons emmagatzemats en l'array amb nom, imatge i pes.
+function printList(){
+	let array_pokemons = ArrayEspecificDePokemons();
+
+	let container = document.getElementById("poke_list");
+
+	let titleDiv = document.createElement('div');
+    titleDiv.classList.add('column-title');
+    titleDiv.innerHTML = `
+        <div class="pokemon-img"><b>Imatge</b></div>
+        <div class="pokemon-info"><b>
+            <span>Nom</span>
+            <span class="pes">Pes</span></b>
+        </div>
+    `;
+    container.appendChild(titleDiv);
+
+
+	for(let i=0; i<array_pokemons.length; i++){
+		let pokemon = array_pokemons[i];
+
+		let pokemonDiv = document.createElement('div');
+		pokemonDiv.classList.add('pokemon-container');
+
+		pokemonDiv.innerHTML = `
+			<div class="pokemon-img">
+				<img src="${pokemon.img}" alt="${pokemon.name}">
+			</div>
+			<div class="pokemon-info">
+				<span>${pokemon.name}</span>
+				<span class="pes">${pokemon.weight}</span>
+			</div>
+		`;
+		container.appendChild(pokemonDiv);
+	}
+}
+
+
+//M'he trobat amb el problema de la globalitat i ara ho intentaré solventar. La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
+function ArrayEspecificDePokemons(){
+	let pokemons_images = dadesPokemon.map((pokemon) => pokemon.img);
+	let pokemons_names = dadesPokemon.map((pokemon) => pokemon.name);
+	let pokemons_weight = dadesPokemon.map((pokemon) => pokemon.weight);
+
+	//suprimeix 'kg' del valor del pes de cada pokemon
+	let pes_pokes_filtrat = filtraPes(pokemons_weight);
+
+	//fem l'array multidimensional amb els atributs de pes, nom i imatge per cada pokemon
+	let arr_multi = [];
+	for(let i=0; i<dadesPokemon.length; i++){
+		let poke_data = {
+			img: pokemons_images[i],
+			name: pokemons_names[i],
+			weight: pes_pokes_filtrat[i]
+		}
+		arr_multi.push(poke_data);
+	}
+	return arr_multi;
+}
+
+//funció que rep un array i procesa tot els seus valors suprimint el contingut trobat després de l'espai en blanc
+function filtraPes(arr_text){
+	for(let i=0; i<arr_text.length; i++){
+		let temp = arr_text[i];
+		let espai = FindSpace(temp);
+		let result = temp.slice(0, espai);
+		arr_text[i] = result;
+	}
+	return arr_text;
+}
+
+//funció que recorre un text en la cerca d'un espai en blanc i retorna la seva posició
+function FindSpace(text){
+	let num = text.length;
+	for(let i=0; i<text.length; i++){
+		if(text.charAt(i) == " "){
+			return num = i;
+		}
+	}
+	return num;
+}
