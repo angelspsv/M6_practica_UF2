@@ -472,3 +472,39 @@ function FindSpace(text){
 	}
 	return num;
 }
+
+
+
+// ///////////////////////////////
+// ////       PAS 2           ////
+// ///////////////////////////////
+//Crear un gràfic amb la llibreria chart.js
+//definim les dades del gràfic
+document.addEventListener('DOMContentLoaded', function(){
+	const data = {
+		labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
+		datasets: [{
+			label: 'My First Dataset',
+			backgroundColor: [
+				'rgb(255, 99, 132)',
+      			'rgb(7, 203, 138)',
+      			'rgb(255, 205, 86)',
+      			'rgb(201, 203, 207)',
+      			'rgb(54, 162, 235)'
+			],
+			borderColor: 'rgba(0, 0, 0, 0,5)',
+            borderWidth: 1,
+			data: [6, 8, 4, 2, 7]
+		}]
+	};
+
+	//configuració del gràfic
+	const config = {
+		type: 'polarArea',
+		data: data,
+		options: {}
+	};
+
+	//creació del gràfic
+	new Chart(document.getElementById('myChart'), config);
+});
