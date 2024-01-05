@@ -508,3 +508,112 @@ document.addEventListener('DOMContentLoaded', function(){
 	//creació del gràfic
 	new Chart(document.getElementById('myChart'), config);
 });
+
+//Pas 2. Punt 4 i 5 i 6:
+//creació de 4 arrays: arrayLabels, arrayDadesGraf, backgroundColor, borderColor
+
+function MostraGrafic(){
+	let arrayLabelsPoke = ["Grass", "Poison", "Fire", "Flying", "Water", "Bug", "Normal", "Electric", "Ground", "Fighting", "Psychic", "Rock", "Ice", "Ghost", "Dragon"];
+	let arrayDadesGrafPoke = [14, 33, 12, 19, 32, 12, 24, 9, 14, 8, 14, 11, 5, 3, 3];
+	let borderColorPokes = ['rgb(0,0,0)'];
+	let backgroundColorPokes = ['rgb(225, 149, 127)', 'rgb(229, 204, 21)', 'rgb(81, 240, 15)', 'rgb(25, 232, 146)', 'rgb(7, 90, 116)', 'rgb(10, 71, 199)', 'rgb(176, 153, 214)', 'rgb(187, 14, 240)', 'rgb(236, 24, 221)', 'rgb(79, 66, 74)', 'rgb(184, 16, 40)', 'rgb(111, 38, 17)', 'rgb(21, 21, 20)', 'rgb(25, 180, 34)', 'rgb(93, 189, 179)'];
+	let lloc = 'myChart1';
+	FesGrafic(arrayLabelsPoke, backgroundColorPokes, borderColorPokes, arrayDadesGrafPoke, lloc);
+}
+
+
+function FesGrafic(labels, backgroundColor, borderColor, data, lloc){
+	//Dades del gràfic de pokemons
+	const data1 = {
+		labels,
+		datasets: [{
+			label: 'Gràfic de dades',
+			backgroundColor,
+			borderColor,
+			borderWidth: 1,
+			data,
+		}]
+	};
+
+	//configuració del gràfic de pokemons
+	const config = {
+        type: 'polarArea',
+        data: data1,
+        options: {}
+    };
+
+	//creació del gràfic
+	new Chart(document.getElementById(lloc), config);
+};
+
+document.addEventListener('DOMContentLoaded', function(){});
+
+
+//Ara faré el gràfic de gènere de pel·lícules
+function MostraGraficPelis(){
+	let arrayLabelsPelis = ["Drama", "Crime", "Action", "Thriller", "Biography", "History", "Adventure", "Fantasy", "Western", "Romance", "Sci-Fi", "Mystery", "Comedy", "War", "Family", "Animation", "Musical", "Music", "Horror", "Film-Noir", "Sport"];
+	let arrayDadesGrafPelis = [185, 53, 39, 60, 27, 15, 57, 28, 8, 27, 32, 33, 44, 28, 25, 22, 5, 8, 4, 6, 10];
+	let borderColorPelis = ['rgb(0,0,0)'];
+	let backgroundColorPelis = ['rgb(225, 149, 127)', 'rgb(184, 16, 40)', 'rgb(229, 204, 21)', 'rgb(238, 19, 79)', 'rgb(81, 240, 15)', 'rgb(225, 24, 140)', 'rgb(25, 232, 146)', 'rgb(89, 7, 114)', 'rgb(7, 90, 116)', 'rgb(39, 10, 88)', 'rgb(10, 71, 199)', 'rgb(176, 153, 214)', 'rgb(16, 14, 94)', 'rgb(187, 14, 240)', 'rgb(121, 197, 221)', 'rgb(236, 24, 221)', 'rgb(79, 66, 74)', 'rgb(184, 16, 40)', 'rgb(111, 38, 17)', 'rgb(21, 21, 20)', 'rgb(93, 189, 179)'];
+	let llocPelis = "myChart2";
+
+	//color de reserva: 'rgb(25, 180, 34)',
+
+	FesGrafic(arrayLabelsPelis, backgroundColorPelis, borderColorPelis, arrayDadesGrafPelis, llocPelis);
+}
+
+
+
+
+/*
+185 53 39 60 27 15 57 28 8 27 32 33 44 28 25 22 5 8 4 6 10
+
+
+*/
+
+
+/*
+
+function MostraGrafic(){
+	//Dades del gràfic de pokemons
+	const data = {
+		labels: ["Grass", "Poison", "Fire", "Flying", "Water", "Bug", "Normal", "Electric", "Ground", "Fighting", "Psychic", "Rock", "Ice", "Ghost", "Dragon"],
+		datasets: [{
+			label: 'Pokemons',
+			backgroundColor: [
+				'rgb(225, 149, 127)',
+				'rgb(229, 204, 21)',
+				'rgb(81, 240, 15)',
+				'rgb(25, 232, 146)',
+				'rgb(7, 90, 116)',
+				'rgb(10, 71, 199)',
+				'rgb(176, 153, 214)',
+				'rgb(187, 14, 240)',
+				'rgb(236, 24, 221)',
+				'rgb(79, 66, 74)',
+				'rgb(184, 16, 40)',
+				'rgb(111, 38, 17)',
+				'rgb(21, 21, 20)',
+				'rgb(25, 180, 34)',
+				'rgb(93, 189, 179)'
+			],
+			borderColor: ['rgb(0,0,0)'],
+			borderWidth: 1,
+			data: [14, 33, 12, 19, 32, 12, 24, 9, 14, 8, 14, 11, 5, 3, 3]
+		}]
+	};
+
+	//configuració del gràfic de pokemons
+	const config = {
+        type: 'polarArea',
+        data: data,
+        options: {}
+    };
+
+	//creació del gràfic
+	new Chart(document.getElementById('myChart1'), config);
+};
+
+document.addEventListener('DOMContentLoaded', function(){});
+
+*/
