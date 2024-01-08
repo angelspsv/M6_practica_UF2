@@ -515,9 +515,12 @@ document.addEventListener('DOMContentLoaded', function(){
 function MostraGrafic(){
 	let arrayLabelsPoke = ["Grass", "Poison", "Fire", "Flying", "Water", "Bug", "Normal", "Electric", "Ground", "Fighting", "Psychic", "Rock", "Ice", "Ghost", "Dragon"];
 	let arrayDadesGrafPoke = [14, 33, 12, 19, 32, 12, 24, 9, 14, 8, 14, 11, 5, 3, 3];
-	let borderColorPokes = ['rgb(0,0,0)'];
-	let backgroundColorPokes = ['rgb(225, 149, 127)', 'rgb(229, 204, 21)', 'rgb(81, 240, 15)', 'rgb(25, 232, 146)', 'rgb(7, 90, 116)', 'rgb(10, 71, 199)', 'rgb(176, 153, 214)', 'rgb(187, 14, 240)', 'rgb(236, 24, 221)', 'rgb(79, 66, 74)', 'rgb(184, 16, 40)', 'rgb(111, 38, 17)', 'rgb(21, 21, 20)', 'rgb(25, 180, 34)', 'rgb(93, 189, 179)'];
+	//faig servir una funció per fer colors random
+	let borderColorPokes = RandomColors(arrayLabelsPoke.length);
+	//faig servir una funció per fer els colors rgba() des de rgb()
+	let backgroundColorPokes = borderColorPokes.map(RGBtoRGBA);
 	let lloc = 'myChart1';
+	//cridem la funció amb aquests paràmetres per crear el gràfic
 	FesGrafic(arrayLabelsPoke, backgroundColorPokes, borderColorPokes, arrayDadesGrafPoke, lloc);
 }
 
@@ -553,67 +556,35 @@ document.addEventListener('DOMContentLoaded', function(){});
 function MostraGraficPelis(){
 	let arrayLabelsPelis = ["Drama", "Crime", "Action", "Thriller", "Biography", "History", "Adventure", "Fantasy", "Western", "Romance", "Sci-Fi", "Mystery", "Comedy", "War", "Family", "Animation", "Musical", "Music", "Horror", "Film-Noir", "Sport"];
 	let arrayDadesGrafPelis = [185, 53, 39, 60, 27, 15, 57, 28, 8, 27, 32, 33, 44, 28, 25, 22, 5, 8, 4, 6, 10];
-	let borderColorPelis = ['rgb(0,0,0)'];
-	let backgroundColorPelis = ['rgb(225, 149, 127)', 'rgb(184, 16, 40)', 'rgb(229, 204, 21)', 'rgb(238, 19, 79)', 'rgb(81, 240, 15)', 'rgb(225, 24, 140)', 'rgb(25, 232, 146)', 'rgb(89, 7, 114)', 'rgb(7, 90, 116)', 'rgb(39, 10, 88)', 'rgb(10, 71, 199)', 'rgb(176, 153, 214)', 'rgb(16, 14, 94)', 'rgb(187, 14, 240)', 'rgb(121, 197, 221)', 'rgb(236, 24, 221)', 'rgb(79, 66, 74)', 'rgb(184, 16, 40)', 'rgb(111, 38, 17)', 'rgb(21, 21, 20)', 'rgb(93, 189, 179)'];
+	let borderColorPelis = RandomColors(arrayLabelsPelis.length);
+	let backgroundColorPelis = borderColorPelis.map(RGBtoRGBA);
 	let llocPelis = "myChart2";
-
-	//color de reserva: 'rgb(25, 180, 34)',
-
+	//cridem la funció amb aquests paràmetres per crear el gràfic
 	FesGrafic(arrayLabelsPelis, backgroundColorPelis, borderColorPelis, arrayDadesGrafPelis, llocPelis);
 }
 
 
+//funció que genera colors random del tipus rgb()
+function RandomColors(num){
+	let arrColors = [];
+    let r;
+    let g;
+    let b;
+    let pujar = "";
+	for (let i=0; i<num; i++) {
+    	r = (Math.random() * 255).toFixed(0);
+		g = (Math.random() * 255).toFixed(0);
+		b = (Math.random() * 255).toFixed(0);
+        resultat = `rgb(${r}, ${g}, ${b})`;
+		arrColors.push(resultat);
+	}
+    return arrColors;
+}
 
 
-/*
-185 53 39 60 27 15 57 28 8 27 32 33 44 28 25 22 5 8 4 6 10
-
-
-*/
-
-
-/*
-
-function MostraGrafic(){
-	//Dades del gràfic de pokemons
-	const data = {
-		labels: ["Grass", "Poison", "Fire", "Flying", "Water", "Bug", "Normal", "Electric", "Ground", "Fighting", "Psychic", "Rock", "Ice", "Ghost", "Dragon"],
-		datasets: [{
-			label: 'Pokemons',
-			backgroundColor: [
-				'rgb(225, 149, 127)',
-				'rgb(229, 204, 21)',
-				'rgb(81, 240, 15)',
-				'rgb(25, 232, 146)',
-				'rgb(7, 90, 116)',
-				'rgb(10, 71, 199)',
-				'rgb(176, 153, 214)',
-				'rgb(187, 14, 240)',
-				'rgb(236, 24, 221)',
-				'rgb(79, 66, 74)',
-				'rgb(184, 16, 40)',
-				'rgb(111, 38, 17)',
-				'rgb(21, 21, 20)',
-				'rgb(25, 180, 34)',
-				'rgb(93, 189, 179)'
-			],
-			borderColor: ['rgb(0,0,0)'],
-			borderWidth: 1,
-			data: [14, 33, 12, 19, 32, 12, 24, 9, 14, 8, 14, 11, 5, 3, 3]
-		}]
-	};
-
-	//configuració del gràfic de pokemons
-	const config = {
-        type: 'polarArea',
-        data: data,
-        options: {}
-    };
-
-	//creació del gràfic
-	new Chart(document.getElementById('myChart1'), config);
-};
-
-document.addEventListener('DOMContentLoaded', function(){});
-
-*/
+//funció que converteix un color rgb() a rgba() amb opacitat de 0.2
+function RGBtoRGBA(color){
+	let color_tmp = color.slice(0, (color.length - 1));
+	let new_color = color_tmp + ", " + 0.2 + ")";
+	return new_color;
+}
