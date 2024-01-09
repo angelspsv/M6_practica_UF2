@@ -122,134 +122,55 @@ fetch("js/data/earthMeteorites.json")
 // //      Part 1            //
 // ////////////////////////////
 
-//funció de proba per l'opció reload
-function MostraText(){
-	let text7 = document.getElementById("agafa_text").value;
-	document.getElementById("text_aqui").innerHTML = text7;
-}
-
 //botó per reiniciar la pàgina amb la funcionalitat location.reload()
 function ReloadWindow(){
 	location.reload();
 }
 
-//funció que ordena mots de forma ascendent
-function OrdenaASC(){
-	let entrada = document.getElementById("espai_per_text").value;
-	document.getElementById("mostra_mots_ordenats").innerHTML = TextToArray(entrada);
-}
 
-
-//funció que rep un text i retorna un array de mots
-//la funció comprova quin és el separador dins del text, espai en blanc o la coma
-function TextToArray(text){
-	let myArr = [];
-	let coma = CheckComa(text);
-	if(coma){
-		//si el separador és una coma
-		myArr = text.split(", ");
-	} else {
-		//si el separador és un espai
-		myArr = text.split(" ");
+//funció que rep un String o 'asc' o 'desc' i crida una des les funcions per ordenar ascendentment o descendentment l'array de pokemons segons el seu índex
+function orderList(str_entrada){
+	if (str_entrada == "asc"){
+		OrdenaASC();
+	} else if (str_entrada == "desc") {
+		OrdenaDSC();
 	}
-	return myArr.sort();
-}
-
-//funció que recorre el text buscant coma
-function CheckComa(text){
-	for(let i=0; i<text.length; i++){
-		if(text.charAt(i) == ","){
-			return true;
-		}
-	}
-	return false;
 }
 
 
-//funció que ordena descendentment els mots que rep
+//funció que ordena descendentment els noms dels pokemons
 function OrdenaDSC(){
-	let entrada2 = document.getElementById("espai_per_text").value;
-	let arr_tmp = TextToArray(entrada2);
-	document.getElementById("mostra_mots_ordenats").innerHTML = arr_tmp.reverse();
+	let contenidor = document.getElementById("mostra_text");
+	for(let i=dadesPokemon.length-1; i>=0; i--){
+		let linia = document.createElement("p");
+		linia.textContent = `${i}  ${dadesPokemon[i].name}`;
+		contenidor.appendChild(linia);
+	}
 }
 
 
-//funció que cerca un fragment dins d'un array
-function CercaPokemon(){
-	let nom_poke = document.getElementById("espai_per_nom_pokemon").value;
-	//treballar amb el nom del pokemon i l'array de pokemons que ja tinc
-	//en l'array de pokemons el nom te aquesta estructura: 'Aaaaaaaa'
-	let lletra = nom_poke.charAt(0).toUpperCase();
-	let temp = (nom_poke.toLowerCase()).slice(1);
-	let nom_cercat = lletra + temp;
-	document.getElementById("resposta_poke").innerHTML = CercaEnArray(nom_cercat);
-}
-
-//funció que cerca el nom del pokemon dins de l'array que ja teniem
-function CercaEnArray(text){
+//funció que ordena els noms dels pokemons de forma ascendent
+function OrdenaASC(){
+	let container = document.getElementById("mostra_text");
 	for(let i=0; i<dadesPokemon.length; i++){
-		if(text == dadesPokemon[i].name){
-			return "Aquest pokemon existeix!";
-		}
+		let linea = document.createElement("p");
+		linea.textContent = `${i}  ${dadesPokemon[i].name}`;
+		container.appendChild(linea);
 	}
-	return "Aquest pokemon no existeix!";
 }
 
 
-//funció que administra un array
-//demana un número i el afegeix a l'array
-//fa el càlcul de la mitja i el retorna
-function MitjanaDelArray(){
-	let number = document.getElementById("num_entrat").value;
-	let arr_nums = [2, 5];
-	arr_nums.push(parseInt(number));
-	let mitja = (Suma(arr_nums)/(arr_nums.length)).toFixed(2);
-	document.getElementById("la_mitja").innerHTML = `La mitja de tots el números de l'array és: ${mitja}`;
-}
-
-function Suma(arr){
-	let suma = 0;
-	for(let i=0; i<arr.length; i++){
-		suma += arr[i];
-	}
-	return suma;
-}
-
-//funció que recorre un String cencant un espai en blanc
-function CheckSpace(text){
-	for(let i=0; i<text.length; i++){
-		if(text.charAt(i) == " "){
-			return true;
-		}
-	}
-	return false;
-}
-
-//Programa que rep un String i el retorna ordenat ascendentment o descendentment depenent si l'usuari
-//prem el botó ASC o el botó DSC
-function orderList(nu){
-	let arr_str = [];
-	let entrada3 = document.getElementById("cadena").value;
-	if (CheckComa(entrada3)){
-		arr_str = entrada3.split(", ");
-	} else {
-		if (CheckSpace(entrada3)){
-			arr_str = entrada3.split(" ");
-		} else {
-			arr_str = entrada3.split('');
-		}
-	}
-	if (nu == 1){
-		arr_str.sort();
-	} else if (nu == 2) {
-		arr_str.sort();
-		arr_str.reverse();
-	}
-	document.getElementById("texto_ordenado").innerHTML = arr_str;
+//funció que calcula la mitjana del pes dels pokemons
+function MitjanaPesPokemons(){
+	let arr_poke_pes = dadesPokemon.map((pokemon) => pokemon.weight);
+	let poke_pes_filtrat = FiltraPeso(arr_poke_pes);
+	
+	let total_pes = (Suma(poke_pes_filtrat)/(arr_poke_pes.length)).toFixed(2);
+	document.getElementById("mostra_text").innerHTML = `El pes mitja és: ${total_pes} kg.`;
 }
 
 
-//Fer una funció anomenada searchList() i que retorni la posició d'un element buscat pel prompt; no queda molt clar, perquè el prompt() és fa servir per agafar dades i si volem mostrar el resultat es millor un alert()
+//Fer una funció anomenada searchList() i que retorni la posició d'un element buscat des del prompt; 
 //entenc que s'ha de cercar l'element dins d'un array
 //En aquest cas i per aquest exercici faré servir l'array de pokemons
 function searchList(array_entrada, elemento_entrada){
@@ -266,17 +187,48 @@ function searchList(array_entrada, elemento_entrada){
 	}
 }
 
-//array de prova
-let mi_arr_prueba = ["angel", "marta", "laura", "miriam", "daniel"];
 
-//funció que rep el valor des del navegador, crea l'array de pokemons, crida la funció searchList() i finalment mostra el resultat amb un alert
+//funció que rep el valor des des del prompt, crea l'array de pokemons, crida la funció searchList() i finalment mostra el resultat amb un alert
 function SearchFunction(){
-	let elem = document.getElementById("cerca_element").value;
+	let elem = prompt("Entra el nom de pokemon que vols cercar:")
+	//document.getElementById("cerca_element").value;
 	let poke_names = [];
 	poke_names = dadesPokemon.map((pokemon) => pokemon.name);
 	let temp = searchList(poke_names, elem);
 	alert(temp);
 }
+
+
+
+//funció que suma tots el valors d'un array i retorna la suma total
+function Suma(arr){
+	let suma = 0;
+	for(let i=0; i<arr.length; i++){
+		suma += parseInt(arr[i]);
+	}
+	return suma;
+}
+
+
+//funció que filtra el pes de cada pokemon i retorna un array amb el pes i sense l'afegit de "kg"
+function FiltraPeso(arr){
+    let str = "";
+	for(let i=0; i<arr.length; i++){
+    	let temp = "";
+    	str = arr[i];
+        for(let j=0; j<str.length; j++){
+    		if(str.charAt(j) == " "){
+            	break;
+            } else {
+            	temp += str.charAt(j);
+            }
+        }
+        arr[i] = temp;
+	}
+    return arr;
+}
+
+
 
 //En l'exercici 4 de la 1a part es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
 //el seu nom, la imatge i el pes (kg), però sense les lletres 'kg'.
@@ -312,51 +264,6 @@ function ArrayMultidimensionalPokemons(){
 }
 
 
-//funció que filtra el pes de cada pokemon i retorna un array amb el pes i sense l'afegit de "kg"
-function FiltraPeso(arr){
-    let str = "";
-	for(let i=0; i<arr.length; i++){
-    	let temp = "";
-    	str = arr[i];
-        for(let j=0; j<str.length; j++){
-    		if(str.charAt(j) == " "){
-            	break;
-            } else {
-            	temp += str.charAt(j);
-            }
-        }
-        arr[i] = temp;
-	}
-    return arr;
-}
-
-		/*
-
-		//Després vaig pensar en una altra manera per filtrar l'array de pes dels pokemons per treure el 'kg' de tots els valors
-		
-		//funció que rep un array i procesa tot els seus valors suprimint el contingut trobat després de l'espai en blanc
-		function filtraPes(arr_text){
-			for(let i=0; i<arr_text.length; i++){
-				let temp = arr_text[i];
-				let espai = FindSpace(temp);
-    			let result = temp.slice(0, espai);
-				arr_text[i] = result;
-			}
-    		return arr_text;
-		}
-
-		//funció que recorre un text en la cerca d'un espai en blanc i retorna la seva posició
-		function FindSpace(text){
-			let num = text.length;
-    		for(let i=0; i<text.length; i++){
-				if(text.charAt(i) == " "){
-    				return num = i;
-    			}
-			}
-    		return num;
-		}
-
-		*/
 
 //funció específica que mostra en el DOM el contingut de l'array multidimensional creat pels Pokemons
 function MuestraObjetoPokemon(arr){
@@ -375,7 +282,7 @@ function MuestraObjetoPokemon(arr){
 }
 
 
-
+// ---> Preguntar si 1.5 és pel pes mitja dels pokemons o ás una altra funció <---
 //fer una funció anomenada calcMitjana() que calculi la mitjana d'un valor numèric fins dos decimals i mostri el resultat per alert()
 function CalculaMitjana(){
 	let numero_entrat = document.getElementById("numero_entrat").value;
@@ -429,7 +336,7 @@ function printList(){
 }
 
 
-//M'he trobat amb el problema de la globalitat i ara ho intentaré solventar. La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
+//M'he trobat amb el problema de la globalitat, intentaré resoldre-ho així. La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
 function ArrayEspecificDePokemons(){
 	let pokemons_images = dadesPokemon.map((pokemon) => pokemon.img);
 	let pokemons_names = dadesPokemon.map((pokemon) => pokemon.name);
@@ -480,6 +387,7 @@ function FindSpace(text){
 // ///////////////////////////////
 //Crear un gràfic amb la llibreria chart.js
 //definim les dades del gràfic
+//gràfic d'exemple
 document.addEventListener('DOMContentLoaded', function(){
 	const data = {
 		labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
@@ -508,6 +416,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	//creació del gràfic
 	new Chart(document.getElementById('myChart'), config);
 });
+
+
+
 
 //Pas 2. Punt 4 i 5 i 6:
 //creació de 4 arrays: arrayLabels, arrayDadesGraf, backgroundColor, borderColor
@@ -588,3 +499,135 @@ function RGBtoRGBA(color){
 	let new_color = color_tmp + ", " + 0.2 + ")";
 	return new_color;
 }
+
+
+
+
+
+
+
+
+
+
+//funcions i mètodes que vaig crear per aquesta pràctica, 
+//però per no entendre bé l'anunciat he de refer exercicis de la part 1 
+//i de moment no calen
+/*
+
+//funció que cerca un fragment dins d'un array
+function CercaPokemon(){
+	let nom_poke = prompt("Entra el nom del pokemon que estàs cercant:");
+	//treballar amb el nom del pokemon i l'array de pokemons que ja tinc
+	//en l'array de pokemons el nom te aquesta estructura: 'Aaaaaaaa'
+	let lletra = nom_poke.charAt(0).toUpperCase();
+	let temp = (nom_poke.toLowerCase()).slice(1);
+	let nom_cercat = lletra + temp;
+	document.getElementById("mostra_text").innerHTML = CercaEnArray(nom_cercat);
+}
+
+
+//funció que cerca el nom del pokemon dins de l'array que ja teniem
+function CercaEnArray(text){
+	for(let i=0; i<dadesPokemon.length; i++){
+		if(text == dadesPokemon[i].name){
+			return "Aquest pokemon existeix!";
+		}
+	}
+	return "Aquest pokemon no existeix!";
+}
+
+
+//funció que rep un text i retorna un array de mots
+//la funció comprova quin és el separador dins del text, espai en blanc o la coma
+function TextToArray(text){
+	let myArr = [];
+	let coma = CheckComa(text);
+	if(coma){
+		//si el separador és una coma
+		myArr = text.split(", ");
+	} else {
+		//si el separador és un espai
+		myArr = text.split(" ");
+	}
+	return myArr.sort();
+}
+
+//funció que recorre el text buscant coma
+function CheckComa(text){
+	for(let i=0; i<text.length; i++){
+		if(text.charAt(i) == ","){
+			return true;
+		}
+	}
+	return false;
+}
+
+
+//funció que ordena descendentment els mots que rep
+function OrdenaDSCmots(){
+	let entrada2 = document.getElementById("espai_per_text").value;
+	let arr_tmp = TextToArray(entrada2);
+	document.getElementById("mostra_mots_ordenats").innerHTML = arr_tmp.reverse();
+}
+
+
+//funció que recorre un String cencant un espai en blanc
+function CheckSpace(text){
+	for(let i=0; i<text.length; i++){
+		if(text.charAt(i) == " "){
+			return true;
+		}
+	}
+	return false;
+}
+
+
+//Programa que rep un String i el retorna ordenat ascendentment o descendentment depenent si l'usuari
+//prem el botó ASC o el botó DSC
+function OrdenarLista(nu){
+	let arr_str = [];
+	let entrada3 = document.getElementById("cadena").value;
+	if (CheckComa(entrada3)){
+		arr_str = entrada3.split(", ");
+	} else {
+		if (CheckSpace(entrada3)){
+			arr_str = entrada3.split(" ");
+		} else {
+			arr_str = entrada3.split('');
+		}
+	}
+	if (nu == 1){
+		arr_str.sort();
+	} else if (nu == 2) {
+		arr_str.sort();
+		arr_str.reverse();
+	}
+	document.getElementById("texto_ordenado").innerHTML = arr_str;
+}
+
+
+//Després vaig pensar en una altra manera per filtrar l'array de pes dels pokemons per treure el 'kg' de tots els valors
+		
+		//funció que rep un array i procesa tot els seus valors suprimint el contingut trobat després de l'espai en blanc
+		function filtraPes(arr_text){
+			for(let i=0; i<arr_text.length; i++){
+				let temp = arr_text[i];
+				let espai = FindSpace(temp);
+    			let result = temp.slice(0, espai);
+				arr_text[i] = result;
+			}
+    		return arr_text;
+		}
+
+		//funció que recorre un text en la cerca d'un espai en blanc i retorna la seva posició
+		function FindSpace(text){
+			let num = text.length;
+    		for(let i=0; i<text.length; i++){
+				if(text.charAt(i) == " "){
+    				return num = i;
+    			}
+			}
+    		return num;
+		}
+
+*/

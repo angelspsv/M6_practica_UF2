@@ -1,11 +1,21 @@
 #reiniciar button {
     background-color: rgb(7, 203, 138); 
-    color: #040000; 
+    color: rgb(36, 32, 32); 
     font-size: medium;
     padding: 10px 20px; 
     border: none; 
     border-radius: 25px; 
     cursor: pointer; 
+}
+
+.buttons button {
+    background-color: rgb(105, 206, 215); 
+    color: rgb(29, 25, 25); 
+    font-size: medium;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 25px; 
+    cursor: pointer;
 }
 
 #arr {

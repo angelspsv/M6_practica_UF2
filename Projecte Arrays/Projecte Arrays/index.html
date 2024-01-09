@@ -11,62 +11,40 @@
 	<title>Pràctica Arrays M6</title>
 </head>
 <body>
-	<input type="text" id="agafa_text">
-	<button onclick="MostraText()">Mostra el teu text!</button>
-	<div id="text_aqui"></div>
-
 	<br><div id="reiniciar"><button onclick="ReloadWindow()">Reiniciar pàgina</button></div>
 	<br>
-	<div><p>Escriu alguns colors i premi el botó perquè els ordeni alfabèticament</p></div>
-	<input type="text" id="espai_per_text">
-	<button onclick="OrdenaASC()">Ordena ascendentment</button>
-	<button onclick="OrdenaDSC()">Ordena descendentment</button>
-	<div id="mostra_mots_ordenats"></div>	
+	<div class="buttons">
+		<button onclick="orderList('desc')">Ordena DSC</button>
+		<button onclick="orderList('asc')">Ordena ASC</button>
+		<button onclick="SearchFunction()">Cercar</button>
+		<button onclick="MitjanaPesPokemons()">Mitjana pes</button>
+	</div>
+	<br><div id="mostra_text"></div>
+	<br>
 
-	<br><p><b>Coneixes el nom d'algun Pokemon? Comprovar-ho!</b></p>
-	<span>Entra el nom del Pokemon:</span>
-	<input type="text" id="espai_per_nom_pokemon"><button onclick="CercaPokemon()">Cercar</button><br>
-	<div id="resposta_poke"></div>
-
-	<br><p>Entra un número que jo desaré dins d'un array i també et diré quina és la mitjana de tots els números que hi ha a l'array</p>
-	<input type="text" id="num_entrat">
-	<button onclick="MitjanaDelArray()">Enter</button>
-	<div id="la_mitja"></div><br>
-
-	<br><span>Entra un String:</span>
-	<input type="text" id="cadena">
-	<button onclick="orderList(1)">Ordena ascendentment</button>
-	<button onclick="orderList(2)">Ordena descendentment</button>
-	<div id="texto_ordenado"></div><br>
-
-	<br><span>Entra l'element que vols cercar:</span>
-	<input type="text" id="cerca_element">
-	<button onclick="SearchFunction()">Cerca'l</button>
-	<div id="posicio_element"></div><br>
 
 	<br><button id="arr" onclick="ArrayMultidimensional()">Fer un array multidimensional amb els noms, imatges i pes dels pokemons</button>
 	<div id="mostra_arr_multi"></div><br>
 
-	<br><span>Entra un número:</span>
-	<input type="text" id="numero_entrat">
-	<button onclick="CalculaMitjana()">Calcula la mitjana</button>
-	<div id="mitjana_num"></div><br>
 
 	<br><span>Descubreix tots els pokemons</span>
 	<button onclick="printList()">aquí</button>
 	<div id="poke_list"></div><br>
 
+
 	<div class="chart-container" style="position: relative; width:700px">
 		<canvas id="myChart"></canvas>
 	</div><br>
 
-	<br><span>Si vols veure el gràfic de Pokemons has de fer click</span>
+
+	<br><span>Per veure el gràfic de Pokemons has de fer click</span>
 	<button onclick="MostraGrafic()"><b>aquí</b></button>
 	<div class="chart-container" style="position: relative; width:700px">
 		<canvas id="myChart1"></canvas>
 	</div><br>
 
-	<br><span>Si vols veure el gràfic de Pel·lícules has de fer click</span>
+
+	<br><span>Per veure el gràfic de Pel·lícules has de fer click</span>
 	<button onclick="MostraGraficPelis()"><b>aquí</b></button>
 	<div class="chart-container" style="position: relative; width:700px">
 		<canvas id="myChart2"></canvas>
