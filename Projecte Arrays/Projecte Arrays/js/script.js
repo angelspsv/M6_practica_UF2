@@ -297,43 +297,41 @@ function calcMitjana(num){
 }
 
 
+
+
 //Exercici 6 de la Part.1
 //fer una funció que mostri en el DOM una llista dels pokemons emmagatzemats en l'array amb nom, imatge i pes.
-function printList(){
-	let array_pokemons = ArrayEspecificDePokemons();
 
-	let container = document.getElementById("poke_list");
+function printList() {
+    let array_pokemons = ArrayEspecificDePokemons();
+    let table = document.getElementById("poke_table");
 
-	let titleDiv = document.createElement('div');
-    titleDiv.classList.add('column-title');
-    titleDiv.innerHTML = `
-        <div class="pokemon-img"><b>Imatge</b></div>
-        <div class="pokemon-info"><b>
-            <span>Nom</span>
-            <span class="pes">Pes</span></b>
-        </div>
+    //neteja la taula abans d'assignar les dades
+    table.innerHTML = '';
+
+    // Crear la fila de encabezado
+    let encabezado = document.createElement('tr');
+    encabezado.innerHTML = `
+        <td><b>Imatge</b></td>
+        <td><b>Nom</b></td>
+        <td class="pes"><b>Pes</b></td>
     `;
-    container.appendChild(titleDiv);
+    table.appendChild(encabezado);
 
-
-	for(let i=0; i<array_pokemons.length; i++){
-		let pokemon = array_pokemons[i];
-
-		let pokemonDiv = document.createElement('div');
-		pokemonDiv.classList.add('pokemon-container');
-
-		pokemonDiv.innerHTML = `
-			<div class="pokemon-img">
-				<img src="${pokemon.img}" alt="${pokemon.name}">
-			</div>
-			<div class="pokemon-info">
-				<span>${pokemon.name}</span>
-				<span class="pes">${pokemon.weight}</span>
-			</div>
-		`;
-		container.appendChild(pokemonDiv);
-	}
+    // Afegir les files, pekemon per fila
+    for (let i = 0; i < array_pokemons.length; i++) {
+        let pokemon = array_pokemons[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td><img src="${pokemon.img}" alt="${pokemon.name}"></td>
+            <td>${pokemon.name}</td>
+            <td class="pes">${pokemon.weight}</td>
+        `;
+        table.appendChild(row);
+    }
 }
+
+
 
 
 //M'he trobat amb el problema de la globalitat, intentaré resoldre-ho així. La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
@@ -420,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-//Pas 2. Punt 4 i 5 i 6:
+//Pas 2. Punt 4, 5, 6, 7 i 8:
 //creació de 4 arrays: arrayLabels, arrayDadesGraf, backgroundColor, borderColor
 
 function MostraGrafic(){
@@ -507,8 +505,111 @@ function RGBtoRGBA(color){
 
 
 
+// ///////////////////////////////
+// ////       PAS 3           ////
+// ///////////////////////////////
+// Modificar les funcions per a que funcionessin en arrays multidimensionals
+//En el meu codi no tinc aquesta forma: 
+//" for(let i=0; i<dades.length; i++){ ", però si una semblant: " for(let i=0; i<dadesPokemon.length; i++){ ".
+
+/*
+Codi original de la funció OrdenaASC() amb el bucle for normal:
+
+//funció que ordena els noms dels pokemons de forma ascendent
+function OrdenaASC(){
+	let container = document.getElementById("mostra_text");
+	for(let i=0; i<dadesPokemon.length; i++){
+		let linea = document.createElement("p");
+		linea.textContent = `${i}  ${dadesPokemon[i].name}`;
+		container.appendChild(linea);
+	}
+}
+
+Ara intentré substituir el bucle for normal per un forEach:
+
+function OrdenaASC(){
+	let container = document.getElementById("mostra_text");
+
+	dadesPokemon.forEach((element, index) => {
+		let linea = document.createElement("p");
+		linea.textContent = `${index}  ${element.name}`;
+		container.appendChild(linea);
+	});
+}
+
+// ----------------- Una altra funció que té un bucle for amb l'expressió semblant de i<dades.length
+
+//funció que ordena descendentment els noms dels pokemons
+function OrdenaDSC(){
+	let contenidor = document.getElementById("mostra_text");
+	for(let i=dadesPokemon.length-1; i>=0; i--){
+		let linia = document.createElement("p");
+		linia.textContent = `${i}  ${dadesPokemon[i].name}`;
+		contenidor.appendChild(linia);
+	}
+}
+
+// ---> Ara faré el pas del for normal al forEach():
 
 
+function OrdenaDSC(){
+	let contenidor = document.getElementById("mostra_text");
+	dadesPokemon.reverse().forEach((element, index) => {
+		let linia = document.createElement("p");
+		let index_invertit = dadesPokemon.length - index - 1;
+		linia.textContent = `${index_invertit}  ${element.name}`;
+		contenidor.appendChild(linia);
+	});
+}
+
+*/
+
+
+
+
+
+
+// Adaptació de la funció Search 
+// en el meu cas es tracta de les funcions
+// searchList() i SearchFunction()
+ 
+	let inputBuscado = document.getElementById('text_entrada');
+    let trobat = document.getElementById('resultats');
+    let dataArray = dadesPokemon.map(element => element.name);
+	//["uno", "dos", "tres", "cuatro"];
+
+    inputBuscado.addEventListener('input', (e) => {
+        let buscado = e.target.value.toLowerCase();
+        let arr_filtrat = dataArray.filter(item => item.toLowerCase().includes(buscado));
+
+        mostraResultats(arr_filtrat);
+    });
+
+    function mostraResultats(resultados) {
+        trobat.innerHTML = '';
+        resultados.forEach(element => {
+            let li = document.createElement('li');
+            li.textContent = element;
+            trobat.appendChild(li);
+
+            console.log(element);
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //////////////////////////////////////////////////////
 //funcions i mètodes que vaig crear per aquesta pràctica, 
 //però per no entendre bé l'anunciat he de refer exercicis de la part 1 
 //i de moment no calen

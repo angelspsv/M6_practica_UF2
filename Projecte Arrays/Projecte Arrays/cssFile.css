@@ -28,40 +28,17 @@
     cursor: pointer;
 }
 
-.pokemon-container {
-    display: flex;
-    margin-bottom: 10px;
+#poke_table {
+    border-collapse: collapse;
+    width: 50%;
 }
 
-.pokemon-img {
-    margin-right: 10px;
+#poke_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
 }
 
-.pokemon-info {
-    margin-top: 40px;
-}
-
-.pes {
+#poke_table .pes {
     margin-left: 50px;
-}
-
-.column-title {
-    display: flex;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.column-title .pokemon-img {
-    margin-right: 10px;
-    margin-top: 40px;
-    margin-left: 40px;
-}
-
-.column-title .pokemon-info {
-    margin-top: 40px;
-    margin-left: 45px;
-}
-
-.column-title .pes {
-    margin-left: 75px;
 }
