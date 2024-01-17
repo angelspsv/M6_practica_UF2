@@ -188,10 +188,9 @@ function searchList(array_entrada, elemento_entrada){
 }
 
 
-//funció que rep el valor des des del prompt, crea l'array de pokemons, crida la funció searchList() i finalment mostra el resultat amb un alert
+//funció que rep el valor des del prompt, crea l'array de pokemons, crida la funció searchList() i finalment mostra el resultat amb un alert
 function SearchFunction(){
 	let elem = prompt("Entra el nom de pokemon que vols cercar:")
-	//document.getElementById("cerca_element").value;
 	let poke_names = [];
 	poke_names = dadesPokemon.map((pokemon) => pokemon.name);
 	let temp = searchList(poke_names, elem);
@@ -235,7 +234,7 @@ function FiltraPeso(arr){
 //faré els tres arrays per separat perquè he de modificar el valor de weight
 function ArrayMultidimensional(){
 	let myArrMultidimensional = ArrayMultidimensionalPokemons();
-	MuestraObjetoPokemon(myArrMultidimensional);
+	MuestraArrayPokemon(myArrMultidimensional);
 }
 
 
@@ -246,50 +245,49 @@ function ArrayMultidimensionalPokemons(){
 	let poke_peso = dadesPokemon.map((pokemon) => pokemon.weight);
 
 	let poke_peso_filtrat = FiltraPeso(poke_peso);
-	//línia per provar la correcta execució de la funció FiltraPeso()
-	/*
-	document.getElementById("mostra_arr_multi").innerHTML = poke_peso_filtrat;
-	*/
 
-	let arr_poke_multidimensional = [];
-	for(let i=0; i<dadesPokemon.length; i++){
-		let poke_data_temp = {
-			name: poke_names[i],
-			img: poke_fotos[i],
-			weight: poke_peso_filtrat[i]
-		}
-		arr_poke_multidimensional.push(poke_data_temp);
-	}
+	let arr_poke_multidimensional = makeArr(poke_names, poke_peso_filtrat, poke_fotos);
 	return arr_poke_multidimensional;
 }
 
 
+//una funció bàsica que rep 3 arrays i retorna un array d'arrays
+function makeArr(arr1, arr2, arr3){
+	let arr_de_arr = [];
+	for(let i=0; i<arr1.length; i++){
+    	arr_de_arr.push([arr1[i], arr2[i], arr3[i]]);
+	}
+    return arr_de_arr;
+}
 
-//funció específica que mostra en el DOM el contingut de l'array multidimensional creat pels Pokemons
-function MuestraObjetoPokemon(arr){
+
+
+//funció específica que mostra en el DOM el contingut de l'array multidimensional creat per l'array de Pokemons
+function MuestraArrayPokemon(arr){
 	let container = document.getElementById("mostra_arr_multi");
 	for(let i=0; i<arr.length; i++){
 		let pokemon = arr[i];
 
+		//descomposició de cada array en diferents elements
+		let nom = pokemon[0];
+		let pes = pokemon[1];
+		let imatge = pokemon[2];
+
 		let pokemonDiv = document.createElement('div');
 		pokemonDiv.innerHTML = `
-			<h3>${pokemon.name}</h3>
-			<img src="${pokemon.img}" alt="${pokemon.name}">
-			<p>Peso: ${pokemon.weight}</p>
+			<h3>${nom}</h3>
+			<p>Pes: ${pes}</p>
+			<img src="${imatge}" alt="${nom}">
 		`;
 		container.appendChild(pokemonDiv);
 	}
 }
 
 
-// ---> Preguntar si 1.5 és pel pes mitja dels pokemons o ás una altra funció <---
-//fer una funció anomenada calcMitjana() que calculi la mitjana d'un valor numèric fins dos decimals i mostri el resultat per alert()
-function CalculaMitjana(){
-	let numero_entrat = document.getElementById("numero_entrat").value;
-	let temp2 = calcMitjana(numero_entrat);
-	alert(temp2);
-}
 
+
+// Pas 1, exercici 5
+//fer una funció anomenada calcMitjana() que calculi la mitjana d'un valor numèric fins dos decimals i mostri el resultat per alert()
 function calcMitjana(num){
 	let temp1 = parseInt(num);
 	let num_mitjana = (temp1/2).toFixed(2);
@@ -299,7 +297,7 @@ function calcMitjana(num){
 
 
 
-//Exercici 6 de la Part.1
+//Part 1, exercici 6.
 //fer una funció que mostri en el DOM una llista dels pokemons emmagatzemats en l'array amb nom, imatge i pes.
 
 function printList() {
@@ -334,7 +332,7 @@ function printList() {
 
 
 
-//M'he trobat amb el problema de la globalitat, intentaré resoldre-ho així. La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
+//La funció retornarà un array multidimensional dels pokemons amb imatge, pes i el nom.
 function ArrayEspecificDePokemons(){
 	let pokemons_images = dadesPokemon.map((pokemon) => pokemon.img);
 	let pokemons_names = dadesPokemon.map((pokemon) => pokemon.name);
@@ -400,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			],
 			borderColor: 'rgba(0, 0, 0, 0,5)',
             borderWidth: 1,
-			data: [6, 8, 4, 2, 7]
+			data: [11, 16, 7, 3, 14]
 		}]
 	};
 
@@ -509,7 +507,7 @@ function RGBtoRGBA(color){
 // ////       PAS 3           ////
 // ///////////////////////////////
 // Modificar les funcions per a que funcionessin en arrays multidimensionals
-//En el meu codi no tinc aquesta forma: 
+//	En el meu codi no tinc aquesta forma: 
 //" for(let i=0; i<dades.length; i++){ ", però si una semblant: " for(let i=0; i<dadesPokemon.length; i++){ ".
 
 /*
@@ -572,32 +570,90 @@ function OrdenaDSC(){
 // Adaptació de la funció Search 
 // en el meu cas es tracta de les funcions
 // searchList() i SearchFunction()
- 
-	let inputBuscado = document.getElementById('text_entrada');
-    let trobat = document.getElementById('resultats');
-    let dataArray = dadesPokemon.map(element => element.name);
-	//["uno", "dos", "tres", "cuatro"];
+// encara que aquí no funciona, en el fitxer extern (pas3search.js) sí
 
-    inputBuscado.addEventListener('input', (e) => {
-        let buscado = e.target.value.toLowerCase();
-        let arr_filtrat = dataArray.filter(item => item.toLowerCase().includes(buscado));
+let inputBuscado = document.getElementById("text_entrada");
+let trobat = document.getElementById("resultats");
+let dataArray = ["un", "dos", "tres", "quatre", "cinc"];	//array de prova
 
-        mostraResultats(arr_filtrat);
+inputBuscado.addEventListener("input", (e) => {
+    let buscado = e.target.value.toLowerCase();
+    let arr_filtrat = dataArray.filter(item => item.toLowerCase().includes(buscado));
+
+    mostraResultats(arr_filtrat);
+});
+
+function mostraResultats(resultados) {
+    trobat.innerHTML = "";
+    resultados.forEach(element => {
+        let li = document.createElement("li");
+        li.textContent = element;
+        trobat.appendChild(li);
+
+        console.log(element);
     });
-
-    function mostraResultats(resultados) {
-        trobat.innerHTML = '';
-        resultados.forEach(element => {
-            let li = document.createElement('li');
-            li.textContent = element;
-            trobat.appendChild(li);
-
-            console.log(element);
-        });
-    }
+}
 
 
 
+
+
+
+
+// //////////////////////////////////////////
+// //////////      PAS 4           //////////
+// //////////////////////////////////////////
+
+// Modificar l'array multidimensional de pokemons de l'exercici 4 de la 1a part
+// crear un array d'objectes de pokemon amb els atributs de nom, pes i imatge
+// Quan s'executi el resultat visual serà el mateix que amb l'array multidimensional
+
+//En l'exercici 4 de la 1a part es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
+//el seu nom, la imatge i el pes (kg), però sense les lletres 'kg'.
+//faré els tres arrays per separat perquè he de modificar el valor de weight
+function ArrayObjectes(){
+	let myArrDeObjectes = ArrayObjectesPokemons();
+	MuestraObjetoPokemon(myArrDeObjectes);
+}
+
+
+//Creació d'un array de objectes de pokemon amb retorn
+function ArrayObjectesPokemons(){
+	let poke_names = dadesPokemon.map((pokemon) => pokemon.name);
+	let poke_fotos = dadesPokemon.map((pokemon) => pokemon.img);
+	let poke_peso = dadesPokemon.map((pokemon) => pokemon.weight);
+
+	let poke_peso_filtrat = FiltraPeso(poke_peso);
+	
+	let arr_poke_multidimensional = [];
+	for(let i=0; i<dadesPokemon.length; i++){
+		let poke_data_temp = {
+			name: poke_names[i],
+			img: poke_fotos[i],
+			weight: poke_peso_filtrat[i]
+		}
+		arr_poke_multidimensional.push(poke_data_temp);
+	}
+	return arr_poke_multidimensional;
+}
+
+
+
+//funció específica que mostra en el DOM el contingut de l'array d'objectes creat pels Pokemons
+function MuestraObjetoPokemon(arr){
+	let container = document.getElementById("mostra_arr_obj");
+	for(let i=0; i<arr.length; i++){
+		let pokemon = arr[i];
+
+		let pokemonDiv = document.createElement('div');
+		pokemonDiv.innerHTML = `
+			<h3>${pokemon.name}</h3>
+			<img src="${pokemon.img}" alt="${pokemon.name}">
+			<p>Peso: ${pokemon.weight}</p>
+		`;
+		container.appendChild(pokemonDiv);
+	}
+}
 
 
 
@@ -614,6 +670,13 @@ function OrdenaDSC(){
 //però per no entendre bé l'anunciat he de refer exercicis de la part 1 
 //i de moment no calen
 /*
+
+
+function CalculaMitjana(){
+	let numero_entrat = document.getElementById("numero_entrat").value;
+	let temp2 = calcMitjana(numero_entrat);
+	alert(temp2);
+}
 
 //funció que cerca un fragment dins d'un array
 function CercaPokemon(){
@@ -730,5 +793,4 @@ function OrdenarLista(nu){
 			}
     		return num;
 		}
-
 */

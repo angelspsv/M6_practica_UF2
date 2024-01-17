@@ -42,3 +42,13 @@
 #poke_table .pes {
     margin-left: 50px;
 }
+
+#arrObj {
+    background-color: #e16230; 
+    color: rgb(4, 0, 0); 
+    font-size: medium;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 10px; 
+    cursor: pointer;
+}
