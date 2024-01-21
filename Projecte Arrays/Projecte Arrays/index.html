@@ -13,6 +13,24 @@
 <body>
 	<br><div id="reiniciar"><button onclick="ReloadWindow()">Reiniciar pàgina</button></div>
 	<br>
+	<div class="radios">
+		<form>
+		  	<p>Per triar amb quin tipus de dades volem treballar:</p>
+			<input type="radio" id="opcion1" name="grupo" value="Pokemons">
+			<label for="opcion1">Pokemons</label><br>
+			<input type="radio" id="opcion2" name="grupo" value="Municipis">
+			<label for="opcion2">Municipis</label><br>
+			<input type="radio" id="opcion3" name="grupo" value="Películes">
+			<label for="opcion3">Pel·lícules</label><br>
+			<input type="radio" id="opcion4" name="grupo" value="Meteorits">
+			<label for="opcion4">Meteorits</label><br>
+			<button type="button" onclick="recogerValor()">Mostra</button>
+		</form>
+		<br><table id="array"></table>
+	</div>
+
+	<br>
+	<p>[Només fet per Pokemons]</p>
 	<div class="buttons">
 		<button onclick="orderList('desc')">Ordena DSC</button>
 		<button onclick="orderList('asc')">Ordena ASC</button>

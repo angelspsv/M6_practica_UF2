@@ -128,6 +128,243 @@ function ReloadWindow(){
 }
 
 
+//Aquí faré la taula amb els 4 arrays i será l'usuari qui triarà les dades de quin array vol veure
+function recogerValor() {
+    let inputRadioSeleccionado = document.querySelector('input[name="grupo"]:checked');
+
+    if (inputRadioSeleccionado) {
+    	let valorSeleccionado = inputRadioSeleccionado.value;
+
+		if (valorSeleccionado == "Pokemons"){
+			printListPokes();
+		} else if (valorSeleccionado == "Municipis"){
+			printListMunicipis();
+	  	} else if (valorSeleccionado == "Películes"){
+			printListPelis();
+		} else if (valorSeleccionado == "Meteorits"){
+			printListMeteorits();
+		}
+    } else {
+    	alert("Has de triar una opció");
+    }
+}
+
+
+//funció per crear botons directament a JavaScript
+function createButton(text, clickHandler) {
+    let button = document.createElement('button');
+    button.textContent = text;
+    button.addEventListener('click', clickHandler);
+    return button;
+}
+
+
+//Visialització de l'array simplificat de pokemons amb només 3 atributs
+function printListPokes() {
+    let array_pokemons = ArrayEspecificDePokemons();
+    let table = document.getElementById("array");
+
+    //neteja la taula abans d'assignar les dades
+    table.innerHTML = '';
+
+    //generar la fila d'encapçalat
+    let encabezado = document.createElement('tr');
+    encabezado.innerHTML = `
+        <td><b>Imatge</b></td>
+        <td><b>Nom</b></td>
+        <td class="pes"><b>Pes</b></td>
+    `;
+    table.appendChild(encabezado);
+
+	// generar dos botons per ordenar la taula ascendentment o descendentment
+	let ascButton = createButton("ASC", () => orderList('asc'));
+    let descButton = createButton("DSC", () => orderList('desc'));
+    table.parentNode.insertBefore(ascButton, table);
+    table.parentNode.insertBefore(descButton, table);
+
+    // Afegir les files, pokemon per fila
+    for (let i = 0; i < array_pokemons.length; i++) {
+        let pokemon = array_pokemons[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td><img src="${pokemon.img}" alt="${pokemon.name}"></td>
+            <td>${pokemon.name}</td>
+            <td class="pes">${pokemon.weight}</td>
+        `;
+        table.appendChild(row);
+    }
+}
+
+
+
+//Visialització de l'array simplificat de municipis amb només 3 atributs
+function printListMunicipis() {
+    let municipis_arr = CreaArrayMunicipis();
+    let table = document.getElementById("array");
+
+    //neteja la taula abans d'assignar les dades
+    table.innerHTML = '';
+
+    //generar la fila d'encapçalat
+    let encabezado = document.createElement('tr');
+    encabezado.innerHTML = `
+        <td><b>Nom</b></td>
+        <td><b>Escut</b></td>
+        <td><b>Habitants</b></td>
+    `;
+    table.appendChild(encabezado);
+
+	// generar dos botons per ordenar la taula ascendentment o descendentment
+	let ascButton = createButton("ASC", () => orderList('asc'));
+    let descButton = createButton("DSC", () => orderList('desc'));
+    table.parentNode.insertBefore(ascButton, table);
+    table.parentNode.insertBefore(descButton, table);
+
+    // Afegir les files, municipi per fila
+    for (let i = 0; i < municipis_arr.length; i++) {
+        let municipi = municipis_arr[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+			<td>${municipi.nom}</td>
+			<td><img src="${municipi.escut}" alt="${municipi.nom}"></td>
+            <td>${municipi.habitants}</td>
+        `;
+        table.appendChild(row);
+    }
+}
+
+
+
+//Visialització de l'array simplificat de pel·lícules amb només 3 atributs
+function printListPelis(){
+	let pelicules_arr = CreaArrayPelis();
+	let table = document.getElementById("array");
+
+	//neteja la taula abans d'assignar les dades
+	table.innerHTML = '';
+
+	//generar la fila d'encapçalat
+	let encabezado = document.createElement('tr');
+	encabezado.innerHTML = `
+		<td><b>Nom</b></td>
+		<td><b>Any</b></td>
+		<td><b>Caratula</b></td>
+	`;
+	table.appendChild(encabezado);
+
+	// generar dos botons per ordenar la taula ascendentment o descendentment
+	let ascButton = createButton("ASC", () => orderList('asc'));
+    let descButton = createButton("DSC", () => orderList('desc'));
+    table.parentNode.insertBefore(ascButton, table);
+    table.parentNode.insertBefore(descButton, table);
+
+	// Afegir les files, peli per fila
+    for (let i = 0; i < pelicules_arr.length; i++) {
+        let peli = pelicules_arr[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+			<td>${peli.nom}</td>
+            <td>${peli.any}</td>
+			<td><img src="${peli.caratula}" alt="${peli.nom}"></td>
+        `;
+        table.appendChild(row);
+    }
+}
+
+
+//creació de l'array de municipis amb només 3 atributs
+function CreaArrayMunicipis(){
+	let municipi_nom = dadesMunicipis.map((elements) => elements.municipi_nom);
+	let municipi_escut = dadesMunicipis.map((elements) => elements.municipi_escut);
+	let municipi_habitants = dadesMunicipis.map((elements) => elements.nombre_habitants);
+
+	//ara faré un array d'objectes amb els tres atributs
+	let arr_Municipis = [];
+	for(let i=0; i<dadesMunicipis.length; i++){
+		let data_municipi = {
+			nom: municipi_nom[i],
+			escut: municipi_escut[i],
+			habitants: municipi_habitants[i]
+		}
+		arr_Municipis.push(data_municipi);
+	}
+	return arr_Municipis;
+}
+
+
+//creació de l'array de pel·lícules
+function CreaArrayPelis(){
+	let peli_nom = dadesPelicules.map((movies) => movies.title);
+	let peli_any = dadesPelicules.map((movies) => movies.year);
+	let peli_imatge = dadesPelicules.map((movies) => movies.url);
+
+	//ara faré un array d'objectes de pelis amb tres atributs
+	let arr_Pelis = [];
+	for(let i=0; i<dadesPelicules.length; i++){
+		let data_pelis = {
+			nom: peli_nom[i],
+			any: peli_any[i],
+			caratula: peli_imatge[i]
+		}
+		arr_Pelis.push(data_pelis);
+	}
+	return arr_Pelis;
+}
+
+
+//creació de l'array de meteorits
+function CreaArrayMeteorits(){
+	let arrayMeteorits = dadesMeteorits.map(pedra => ({
+		name: pedra.name,
+		id: pedra.id,
+		mass: pedra.mass
+	}));
+	return arrayMeteorits;
+}
+
+
+//Visialització de l'array simplificat de meteorits amb només 3 atributs
+function printListMeteorits(){
+	let arrayDeMeteorits = CreaArrayMeteorits();
+	let table = document.getElementById("array");
+
+	//netejar la taula abans d'assignar les dades
+	table.innerHTML = '';
+
+	//generar la fila d'encapçalat
+	let encap = document.createElement('tr');
+	encap.innerHTML = `
+		<td><b>Nom</b></td>
+        <td><b>id</b></td>
+        <td><b>Pes</b></td>
+	`;
+	table.appendChild(encap);
+
+	// generar dos botons per ordenar la taula ascendentment o descendentment
+	let ascButton = createButton("ASC", () => orderList('asc'));
+    let descButton = createButton("DSC", () => orderList('desc'));
+    table.parentNode.insertBefore(ascButton, table);
+    table.parentNode.insertBefore(descButton, table);
+
+	// Afegir les files, meteorit per fila
+    for (let i=0; i<arrayDeMeteorits.length; i++) {
+        let pedra = arrayDeMeteorits[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${pedra.name}</td>
+            <td>${pedra.id}</td>
+            <td>${pedra.mass}</td>
+        `;
+        table.appendChild(row);
+    }
+}
+
+
+
+
+
+
+//NOMÉS PER POKEMONS
 //funció que rep un String o 'asc' o 'desc' i crida una des les funcions per ordenar ascendentment o descendentment l'array de pokemons segons el seu índex
 function orderList(str_entrada){
 	if (str_entrada == "asc"){
@@ -138,7 +375,7 @@ function orderList(str_entrada){
 }
 
 
-//funció que ordena descendentment els noms dels pokemons
+//funció que ordena descendentment el índex dels pokemons
 function OrdenaDSC(){
 	let contenidor = document.getElementById("mostra_text");
 	for(let i=dadesPokemon.length-1; i>=0; i--){
@@ -149,7 +386,7 @@ function OrdenaDSC(){
 }
 
 
-//funció que ordena els noms dels pokemons de forma ascendent
+//funció que ordena el índex dels pokemons de forma ascendent
 function OrdenaASC(){
 	let container = document.getElementById("mostra_text");
 	for(let i=0; i<dadesPokemon.length; i++){
@@ -172,7 +409,7 @@ function MitjanaPesPokemons(){
 
 //Fer una funció anomenada searchList() i que retorni la posició d'un element buscat des del prompt; 
 //entenc que s'ha de cercar l'element dins d'un array
-//En aquest cas i per aquest exercici faré servir l'array de pokemons
+//En aquest cas faré servir l'array de pokemons
 function searchList(array_entrada, elemento_entrada){
 	//toLowerCase() totes les lletres de l'array i de l'element cercat
 	let array = array_entrada.map((poke) => poke.toLowerCase());
@@ -229,7 +466,7 @@ function FiltraPeso(arr){
 
 
 
-//En l'exercici 4 de la 1a part es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
+//En l'exercici 4 del PAS 1 es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
 //el seu nom, la imatge i el pes (kg), però sense les lletres 'kg'.
 //faré els tres arrays per separat perquè he de modificar el valor de weight
 function ArrayMultidimensional(){
@@ -244,11 +481,14 @@ function ArrayMultidimensionalPokemons(){
 	let poke_fotos = dadesPokemon.map((pokemon) => pokemon.img);
 	let poke_peso = dadesPokemon.map((pokemon) => pokemon.weight);
 
+	//obtenir un array sense 'kg' del pes
 	let poke_peso_filtrat = FiltraPeso(poke_peso);
-
+	
+	//fer el nou array multidimensional
 	let arr_poke_multidimensional = makeArr(poke_names, poke_peso_filtrat, poke_fotos);
 	return arr_poke_multidimensional;
 }
+
 
 
 //una funció bàsica que rep 3 arrays i retorna un array d'arrays
@@ -286,7 +526,7 @@ function MuestraArrayPokemon(arr){
 
 
 
-// Pas 1, exercici 5
+// PAS 1, exercici 5
 //fer una funció anomenada calcMitjana() que calculi la mitjana d'un valor numèric fins dos decimals i mostri el resultat per alert()
 function calcMitjana(num){
 	let temp1 = parseInt(num);
@@ -297,9 +537,8 @@ function calcMitjana(num){
 
 
 
-//Part 1, exercici 6.
+//PAS 1, exercici 6.
 //fer una funció que mostri en el DOM una llista dels pokemons emmagatzemats en l'array amb nom, imatge i pes.
-
 function printList() {
     let array_pokemons = ArrayEspecificDePokemons();
     let table = document.getElementById("poke_table");
@@ -307,7 +546,7 @@ function printList() {
     //neteja la taula abans d'assignar les dades
     table.innerHTML = '';
 
-    // Crear la fila de encabezado
+    //generar la fila d'encapçalat
     let encabezado = document.createElement('tr');
     encabezado.innerHTML = `
         <td><b>Imatge</b></td>
@@ -316,7 +555,7 @@ function printList() {
     `;
     table.appendChild(encabezado);
 
-    // Afegir les files, pekemon per fila
+    //Afegir les files, un pokemon per fila
     for (let i = 0; i < array_pokemons.length; i++) {
         let pokemon = array_pokemons[i];
         let row = document.createElement('tr');
@@ -416,7 +655,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-//Pas 2. Punt 4, 5, 6, 7 i 8:
+//PAS 2. Punt 4, 5, 6, 7 i 8:
 //creació de 4 arrays: arrayLabels, arrayDadesGraf, backgroundColor, borderColor
 
 function MostraGrafic(){
@@ -455,8 +694,8 @@ function FesGrafic(labels, backgroundColor, borderColor, data, lloc){
 	//creació del gràfic
 	new Chart(document.getElementById(lloc), config);
 };
-
 document.addEventListener('DOMContentLoaded', function(){});
+
 
 
 //Ara faré el gràfic de gènere de pel·lícules
@@ -471,13 +710,14 @@ function MostraGraficPelis(){
 }
 
 
+
 //funció que genera colors random del tipus rgb()
 function RandomColors(num){
 	let arrColors = [];
     let r;
     let g;
     let b;
-    let pujar = "";
+	let resultat = "";
 	for (let i=0; i<num; i++) {
     	r = (Math.random() * 255).toFixed(0);
 		g = (Math.random() * 255).toFixed(0);
@@ -487,6 +727,7 @@ function RandomColors(num){
 	}
     return arrColors;
 }
+
 
 
 //funció que converteix un color rgb() a rgba() amb opacitat de 0.2
@@ -506,6 +747,7 @@ function RGBtoRGBA(color){
 // ///////////////////////////////
 // ////       PAS 3           ////
 // ///////////////////////////////
+// ATENCIÓ, L'APARTAT forEach ESTÀ COMENTAT PER NO ENTRAR EN CONTRADICCIÓ AMB EL CODI ORIGINAL DEL PAS1
 // Modificar les funcions per a que funcionessin en arrays multidimensionals
 //	En el meu codi no tinc aquesta forma: 
 //" for(let i=0; i<dades.length; i++){ ", però si una semblant: " for(let i=0; i<dadesPokemon.length; i++){ ".
@@ -522,9 +764,9 @@ function OrdenaASC(){
 		container.appendChild(linea);
 	}
 }
-
-Ara intentré substituir el bucle for normal per un forEach:
-
+*/
+//Ara intentré substituir el bucle for normal per un forEach:
+/*
 function OrdenaASC(){
 	let container = document.getElementById("mostra_text");
 
@@ -534,10 +776,11 @@ function OrdenaASC(){
 		container.appendChild(linea);
 	});
 }
+*/
+/*
+// ----------------- Ara la funció OrdenaDSC() que té un bucle for amb l'expressió semblant de i<dades.length ---------
 
-// ----------------- Una altra funció que té un bucle for amb l'expressió semblant de i<dades.length
-
-//funció que ordena descendentment els noms dels pokemons
+//funció original que ordena descendentment els noms dels pokemons (PAS1)
 function OrdenaDSC(){
 	let contenidor = document.getElementById("mostra_text");
 	for(let i=dadesPokemon.length-1; i>=0; i--){
@@ -548,8 +791,8 @@ function OrdenaDSC(){
 }
 
 // ---> Ara faré el pas del for normal al forEach():
-
-
+*/
+/*
 function OrdenaDSC(){
 	let contenidor = document.getElementById("mostra_text");
 	dadesPokemon.reverse().forEach((element, index) => {
@@ -559,8 +802,9 @@ function OrdenaDSC(){
 		contenidor.appendChild(linia);
 	});
 }
-
 */
+
+//P.S.: AMBDUES FUNCIONS AMB EL NOU BUCLE forEach SI ÉS DESCOMENTEN FUNCIONEN.
 
 
 
@@ -570,7 +814,7 @@ function OrdenaDSC(){
 // Adaptació de la funció Search 
 // en el meu cas es tracta de les funcions
 // searchList() i SearchFunction()
-// encara que aquí no funciona, en el fitxer extern (pas3search.js) sí
+// encara que aquí no funciona, en el fitxer extern (pas3search.js) sí funciona
 
 let inputBuscado = document.getElementById("text_entrada");
 let trobat = document.getElementById("resultats");
@@ -604,11 +848,11 @@ function mostraResultats(resultados) {
 // //////////      PAS 4           //////////
 // //////////////////////////////////////////
 
-// Modificar l'array multidimensional de pokemons de l'exercici 4 de la 1a part
+// Modificar l'array multidimensional de pokemons de l'exercici 4 del PAS1
 // crear un array d'objectes de pokemon amb els atributs de nom, pes i imatge
 // Quan s'executi el resultat visual serà el mateix que amb l'array multidimensional
 
-//En l'exercici 4 de la 1a part es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
+//En l'exercici 4 del PAS1 es demana la creació d'un array multidimensional que emmagatzemes per cada pokemon: 
 //el seu nom, la imatge i el pes (kg), però sense les lletres 'kg'.
 //faré els tres arrays per separat perquè he de modificar el valor de weight
 function ArrayObjectes(){
@@ -639,21 +883,37 @@ function ArrayObjectesPokemons(){
 
 
 
-//funció específica que mostra en el DOM el contingut de l'array d'objectes creat pels Pokemons
+//funció específica que mostra en el DOM el contingut de l'array d'objectes de Pokemons
 function MuestraObjetoPokemon(arr){
-	let container = document.getElementById("mostra_arr_obj");
-	for(let i=0; i<arr.length; i++){
-		let pokemon = arr[i];
+	let table = document.getElementById("mostra_arr_obj");
+	
+	//neteja la taula abans d'assignar les dades
+    table.innerHTML = '';
 
-		let pokemonDiv = document.createElement('div');
-		pokemonDiv.innerHTML = `
-			<h3>${pokemon.name}</h3>
-			<img src="${pokemon.img}" alt="${pokemon.name}">
-			<p>Peso: ${pokemon.weight}</p>
-		`;
-		container.appendChild(pokemonDiv);
-	}
+	//generar la fila d'encapçalat
+    let encabezado = document.createElement('tr');
+    encabezado.innerHTML = `
+        <td><b>Nom</b></td>
+        <td><b>Imatge</b></td>
+        <td class="pes"><b>Pes</b></td>
+    `;
+    table.appendChild(encabezado);
+
+
+    // Afegir les files, pokemon per fila
+    for (let i = 0; i < arr.length; i++) {
+        let pokemon = arr[i];
+        let row = document.createElement('tr');
+        row.innerHTML = `
+			<td>${pokemon.name}</td>
+			<td><img src="${pokemon.img}" alt="${pokemon.name}"></td>
+            <td class="pes">${pokemon.weight}</td>
+        `;
+        table.appendChild(row);
+    }
 }
+
+
 
 
 
@@ -667,7 +927,7 @@ function MuestraObjetoPokemon(arr){
 
 // //////////////////////////////////////////////////////
 //funcions i mètodes que vaig crear per aquesta pràctica, 
-//però per no entendre bé l'anunciat he de refer exercicis de la part 1 
+//però per no entendre bé l'anunciat he hagut de refer exercicis del PAS1 
 //i de moment no calen
 /*
 
